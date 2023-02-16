@@ -9,8 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/server": "^11.10.0",
+    "@mantine/core": "^5.10.4",
+    "@mantine/hooks": "^5.10.4",
+    "@mantine/modals": "^5.10.4",
+    "@mantine/next": "^5.10.4",
+    "@mantine/notifications": "^5.10.4",
     "@rainbow-me/rainbowkit": "^0.11.0",
     "ethers": "^5.0.0",
+    "jotai": "^2.0.2",
     "next": "^12.1.6",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
