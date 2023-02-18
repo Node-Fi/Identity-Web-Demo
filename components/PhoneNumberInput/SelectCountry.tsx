@@ -3,8 +3,10 @@ import {
   Button,
   Drawer,
   Modal,
+  ScrollArea,
   Select,
   SelectItem,
+  Stack,
   TextInput,
   Title,
 } from "@mantine/core";
@@ -56,7 +58,7 @@ export default function SelectCountry({
   return (
     <>
       <Button onClick={() => setOpened((o) => !o)}>
-        {opened ? "Close" : "Open"}
+        {opened ? "Close" : "Select Country"}
       </Button>
       <Parent
         opened={opened}
@@ -64,7 +66,29 @@ export default function SelectCountry({
         zIndex={1000}
         centered
       >
-        Hello
+        <ScrollArea h="50vh">
+          <Stack w="90vw">
+            {flagsData.map((c) => (
+              <Button
+                key={c.name}
+                onClick={() => {
+                  onSelect?.(c.name);
+                  setOpened(false);
+                }}
+                variant="subtle"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  paddingLeft: 30,
+                }}
+              >
+                <Title style={{ marginRight: 10 }}>{c.flag}</Title>
+                {c.name}
+              </Button>
+            ))}
+          </Stack>
+        </ScrollArea>
       </Parent>
     </>
   );
