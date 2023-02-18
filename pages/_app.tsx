@@ -134,6 +134,7 @@ function MyApp({
                             alignItems: "center",
                           }}
                           src="/images/profile/node-finance-nobg.png"
+                          alt="Node Finance"
                         />
                         <Group align="center" spacing={20}>
                           <MediaQuery
