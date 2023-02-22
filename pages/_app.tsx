@@ -111,9 +111,9 @@ function MyApp({
             colorScheme,
           }}
         >
-          <ModalsProvider>
-            <WagmiConfig client={wagmiClient}>
-              <RainbowKitProvider chains={chains}>
+          <WagmiConfig client={wagmiClient}>
+            <RainbowKitProvider chains={chains}>
+              <ModalsProvider>
                 <AppShell
                   header={
                     <Header height={60} withBorder={false} p="md">
@@ -171,9 +171,9 @@ function MyApp({
                 >
                   <Component {...pageProps} />
                 </AppShell>
-              </RainbowKitProvider>
-            </WagmiConfig>
-          </ModalsProvider>
+              </ModalsProvider>
+            </RainbowKitProvider>
+          </WagmiConfig>
         </MantineProvider>
       </ColorSchemeProvider>
     </>

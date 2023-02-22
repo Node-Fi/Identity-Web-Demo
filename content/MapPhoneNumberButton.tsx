@@ -1,37 +1,32 @@
 import React from "react";
-import { Button, Center, Group, Input, Stack, Text } from "@mantine/core";
+import { Button, Modal } from "@mantine/core";
 import { useAccount } from "wagmi";
-import { openModal } from "@mantine/modals";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
-import PhoneInputGpt from "../components/PhoneNumberInput/PhoneNumberGpt";
+import PhoneInput from "../components/PhoneNumberInput/PhoneNumberInput";
 import SelectCountry from "../components/PhoneNumberInput/SelectCountry";
+import PhoneNumberMappingBody from "../components/Modals/PhoneNumberConfirmationModal";
 
 export function MapPhoneNumberButton() {
+  const [modalOpened, setOpenModal] = React.useState(false);
   const account = useAccount();
   const connection = useConnectModal();
 
   return account.isConnected ? (
-    <Button
-      onClick={() => {
-        openModal({
-          modalId: "phone-number-mapping",
-          title: "Map Phone Number",
-          children: <SelectCountry />,
-        });
-      }}
-    >
-      Map Phone Number
-    </Button>
+    <>
+      <Button variant="outline" onClick={() => setOpenModal(true)}>
+        Map Phone Number
+      </Button>
+      <Modal
+        opened={modalOpened}
+        onClose={() => setOpenModal(false)}
+        withCloseButton={false}
+      >
+        <PhoneNumberMappingBody />
+      </Modal>
+    </>
   ) : (
-    <Center h="40vh">
-      <Stack>
-        <Button variant="outline" onClick={connection.openConnectModal}>
-          Connect Wallet to Map Phone Number
-        </Button>
-        <Button variant="gradient" onClick={connection.openConnectModal}>
-          Lookup Phone Number
-        </Button>
-      </Stack>
-    </Center>
+    <Button variant="outline" onClick={connection.openConnectModal}>
+      Connect Wallet to Map Phone Number
+    </Button>
   );
 }
