@@ -78,7 +78,7 @@ const getTitleAndProgress = (
 export const PhoneNumberMappingBody = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>();
   const [code, setCode] = useState<string>();
-  const [step, setStep] = useState<Step>("enter-code");
+  const [step, setStep] = useState<Step>("phone");
   const account = useAccount();
 
   const { title, progress, color } = useMemo(
