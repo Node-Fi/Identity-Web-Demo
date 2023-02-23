@@ -1,7 +1,8 @@
 /* eslint-disable react/display-name */
 import React, { useCallback, useState } from "react";
-import { Group, Input } from "@mantine/core";
+import { Divider, Group, Input, TextInput } from "@mantine/core";
 import SelectCountry, { FlagInfo } from "./SelectCountry";
+import { useStyles } from "./styles";
 
 const isPhoneNumber = (str: string): boolean =>
   /^(\+\d{1,2})?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test(str);
@@ -11,6 +12,7 @@ const PhoneInput = ({
 }: {
   onValidPhonenumber: (phonenumber: string) => void;
 }) => {
+  const { classes, cx } = useStyles();
   const [country, setCountry] = useState<FlagInfo>({
     name: "United States",
     flag: "🇺🇸",
@@ -43,12 +45,23 @@ const PhoneInput = ({
   );
 
   return (
-    <Group spacing={0} w="100%">
-      <SelectCountry onSelect={onCountrySelect} selectedCountry={country} />
-      <Input
+    <Group spacing={0} w="100%" className={cx(classes.container)} pl={0}>
+      <SelectCountry
+        onSelect={onCountrySelect}
+        selectedCountry={country}
+        style={{
+          width: "30%",
+        }}
+      />
+      <Divider orientation="vertical" />
+      <TextInput
         value={phoneNumber}
         onChange={onPhoneNumberChange}
         placeholder="000 000 0000"
+        variant="unstyled"
+        size="lg"
+        w="60%"
+        pl="sm"
       />
     </Group>
   );

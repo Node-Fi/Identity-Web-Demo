@@ -20,12 +20,12 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import {
   AppShell,
+  Aside,
   ColorScheme,
   ColorSchemeProvider,
   Container,
   Footer,
   Group,
-  Header,
   Image,
   MantineProvider,
   MediaQuery,
@@ -37,6 +37,8 @@ import NextApp from "next/app";
 import { useState } from "react";
 import { getCookie, setCookie } from "cookies-next";
 import { ColorSchemeToggle } from "../components/ColorSchemeToggle/CollorSchemeToggle";
+import { HorizontalSection } from "@mantine/core/lib/AppShell/HorizontalSection/HorizontalSection";
+import { Header } from "../components/Header/Header";
 
 const { chains, provider, webSocketProvider } = configureChains(
   [celo, celoAlfajores, mainnet, polygon, optimism, arbitrum],
@@ -116,39 +118,44 @@ function MyApp({
               <ModalsProvider>
                 <AppShell
                   header={
-                    <Header height={60} withBorder={false} p="md">
-                      <Container
-                        size="md"
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          alignContent: "center",
-                          height: "100%",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <Image
-                          style={{
-                            width: 200,
-                            display: "flex",
-                            alignItems: "center",
-                          }}
-                          src="/images/profile/node-finance-nobg.png"
-                          alt="Node Finance"
-                        />
-                        <Group align="center" spacing={20}>
-                          <MediaQuery
-                            smallerThan="sm"
-                            styles={{ display: "none" }}
-                          >
-                            <div>
-                              <ConnectButton />
-                            </div>
-                          </MediaQuery>
-                          <ColorSchemeToggle />
-                        </Group>
-                      </Container>
-                    </Header>
+                    <Header />
+                    // <Header height={60} withBorder={false} p="md">
+                    //   <Container
+                    //     size="md"
+                    //     style={{
+                    //       display: "flex",
+                    //       alignItems: "center",
+                    //       alignContent: "center",
+                    //       height: "100%",
+                    //       justifyContent: "space-between",
+                    //     }}
+                    //   >
+                    //     <Image
+                    //       style={{
+                    //         width: 200,
+                    //         display: "flex",
+                    //         alignItems: "center",
+                    //       }}
+                    //       src={
+                    //         colorScheme === "dark"
+                    //           ? "/images/profile/node-finance-nobg.png"
+                    //           : "/images/node_logo_dark.png"
+                    //       }
+                    //       alt="Node Finance"
+                    //     />
+                    //     <Group align="center" spacing={20}>
+                    //       <MediaQuery
+                    //         smallerThan="sm"
+                    //         styles={{ display: "none" }}
+                    //       >
+                    //         <div>
+                    //           <ConnectButton />
+                    //         </div>
+                    //       </MediaQuery>
+                    //       <ColorSchemeToggle />
+                    //     </Group>
+                    //   </Container>
+                    // </Header>
                   }
                   footer={
                     <MediaQuery largerThan="sm" styles={{ display: "none" }}>

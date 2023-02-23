@@ -51,6 +51,7 @@ export interface FlagInfo {
 interface SelectCountryProps {
   onSelect?: (countryInfo: FlagInfo) => void;
   selectedCountry?: FlagInfo;
+  style?: React.CSSProperties;
 }
 
 const countryToFlagInfo = flagsData.reduce((acc, flag) => {
@@ -61,6 +62,7 @@ const countryToFlagInfo = flagsData.reduce((acc, flag) => {
 export default function SelectCountry({
   onSelect,
   selectedCountry,
+  style,
 }: SelectCountryProps) {
   const mediaQuery = useMediaQuery("(min-width: 600px)");
   const [opened, setOpened] = React.useState(false);
@@ -68,11 +70,16 @@ export default function SelectCountry({
   return mediaQuery ? (
     <Popover opened={opened} withArrow>
       <Popover.Target>
-        <Button onClick={() => setOpened((o) => !o)} variant="subtle">
+        <Button
+          onClick={() => setOpened((o) => !o)}
+          variant="subtle"
+          p={0}
+          style={style}
+        >
           {!selectedCountry ? (
             "+?"
           ) : (
-            <Group spacing="xs">
+            <Group spacing="xs" p={0}>
               <Title>{selectedCountry.flag}</Title>
               <Text>{selectedCountry.dial_code}</Text>
             </Group>
@@ -107,11 +114,16 @@ export default function SelectCountry({
     </Popover>
   ) : (
     <>
-      <Button onClick={() => setOpened((o) => !o)} variant="subtle">
+      <Button
+        onClick={() => setOpened((o) => !o)}
+        variant="subtle"
+        style={style}
+        p={0}
+      >
         {!selectedCountry ? (
           "+?"
         ) : (
-          <Group spacing="xs">
+          <Group spacing="xs" p={0}>
             <Title>{selectedCountry.flag}</Title>
             <Text>{selectedCountry.dial_code}</Text>
           </Group>

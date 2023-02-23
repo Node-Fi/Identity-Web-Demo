@@ -1,7 +1,9 @@
 import {
+  Alert,
   Button,
   Center,
   Container,
+  Group,
   Loader,
   Progress,
   Stack,
@@ -13,6 +15,14 @@ import PhoneInput from "../PhoneNumberInput/PhoneNumberInput";
 import { useAccount, useMutation } from "wagmi";
 import axios, { AxiosResponse } from "axios";
 import OtpInput from "react-otp-input";
+import { StatRow } from "../StatRow/StatRow";
+import {
+  IconAlertOctagonFilled,
+  IconArrowDown,
+  IconPhone,
+  IconWallet,
+} from "@tabler/icons-react";
+import { shortenAddress } from "../../utils/shortenAddress";
 
 type VerificationResponse = {
   verification: {
@@ -30,25 +40,6 @@ type Step =
   | "already-verified"
   | "failure";
 
-const getTitle = (step: Step) => {
-  switch (step) {
-    case "phone":
-      return "Enter your phone number";
-    case "confirmation":
-      return "Confirm your phone number";
-    case "sending-otp":
-      return "Sending OTP";
-    case "enter-code":
-      return "Enter OTP";
-    case "success":
-      return "Success";
-    case "already-verified":
-      return "Already verified";
-    case "failure":
-      return "Failure";
-  }
-};
-
 const getTitleAndProgress = (
   step: Step,
   validPhoneNumber?: boolean,
@@ -63,7 +54,7 @@ const getTitleAndProgress = (
       };
     case "confirmation":
       return {
-        title: "Confirm your phone number",
+        title: "Confirm details",
         progress: 20,
         color: "blue",
       };
@@ -76,18 +67,18 @@ const getTitleAndProgress = (
         color: "blue",
       };
     case "success":
-      return { title: "Success", progress: 100, color: "green" };
+      return { title: null, progress: 100, color: "green" };
     case "already-verified":
-      return { title: "Already verified", progress: 100, color: "yellow" };
+      return { title: null, progress: 100, color: "yellow" };
     case "failure":
-      return { title: "Failure", progress: 100, color: "red" };
+      return { title: null, progress: 100, color: "red" };
   }
 };
 
 export const PhoneNumberMappingBody = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>();
   const [code, setCode] = useState<string>();
-  const [step, setStep] = useState<Step>("phone");
+  const [step, setStep] = useState<Step>("enter-code");
   const account = useAccount();
 
   const { title, progress, color } = useMemo(
@@ -174,9 +165,11 @@ export const PhoneNumberMappingBody = () => {
       <Stack mb="xl">
         <Progress value={progress} color={color} />
 
-        <Text size="xl" mb="xl">
-          {title}
-        </Text>
+        {title && (
+          <Text size="xl" mb="xl">
+            {title}
+          </Text>
+        )}
       </Stack>
       {step === "phone" && (
         <>
@@ -193,8 +186,18 @@ export const PhoneNumberMappingBody = () => {
       )}
       {step === "confirmation" && (
         <>
-          <Text variant="text">{`I want to map ${phoneNumber} to ${account.address}.`}</Text>
-          <Text size="sm">sms rates may apply</Text>
+          <StatRow Icon={IconPhone} name="Phone" value={phoneNumber!} />
+          <Center>
+            <Stack justify="center" align="center" spacing={0} mt="xl" mb="xl">
+              <IconArrowDown />
+            </Stack>
+          </Center>
+          <StatRow
+            Icon={IconWallet}
+            name="Wallet"
+            value={shortenAddress(account.address!)}
+          />
+
           <Button
             w="100%"
             mt="lg"
@@ -222,11 +225,11 @@ export const PhoneNumberMappingBody = () => {
             onChange={setCode}
             numInputs={6}
             inputStyle={{
-              width: "1.25rem",
-              height: "2rem",
+              width: "2rem",
+              height: "3rem",
             }}
             separator={
-              <Text ml="xs" mr="xs">
+              <Text ml="0.25rem" mr="0.25rem">
                 -
               </Text>
             }
@@ -255,21 +258,26 @@ export const PhoneNumberMappingBody = () => {
         </>
       )}
       {step === "success" && (
-        <>
-          <Text variant="text">Success!</Text>
+        <Alert title="Success" color="green">
           <Text variant="text">
             Your phone number has been mapped to your wallet.
           </Text>
-        </>
+        </Alert>
       )}
       {step === "already-verified" && (
         <>
-          <Text variant="text">Already Verified!</Text>
-          <Text variant="text">
-            If you continue, you will overwrite your existing mapping.
-          </Text>
+          <Alert
+            title="Already Verified!"
+            color="yellow"
+            icon={<IconAlertOctagonFilled />}
+          >
+            <Text variant="text">
+              If you continue, you will overwrite your existing mapping.
+            </Text>
+          </Alert>
           <Button
             w="100%"
+            mt="lg"
             onClick={async () => {
               init.reset();
               init.mutate({
@@ -285,14 +293,16 @@ export const PhoneNumberMappingBody = () => {
       )}
       {step === "failure" && (
         <>
-          <Text variant="text">Failure!</Text>
-          <Text variant="text">Something went wrong. Please try again.</Text>
-
+          <Alert title="Failure" color="red" icon={<IconAlertOctagonFilled />}>
+            <Text variant="text">Something went wrong.</Text>
+            <Text>Please try again later.</Text>
+          </Alert>
           <Button
             w="100%"
             mt="lg"
             onClick={() => setStep("phone")}
             variant="outline"
+            color="red"
           >
             Restart
           </Button>

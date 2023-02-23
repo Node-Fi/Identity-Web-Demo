@@ -1,4 +1,5 @@
 import {
+  Accordion,
   Alert,
   Button,
   Container,
@@ -7,6 +8,7 @@ import {
   Loader,
   Modal,
   Stack,
+  Table,
   Text,
 } from "@mantine/core";
 import axios from "axios";
@@ -96,6 +98,53 @@ export const LookupNumberModal = () => {
               ? "Send Tokens to This Address"
               : "Connect Wallet to Send Tokens"}
           </Button>
+          {data && data.attestations.length > 1 && (
+            <Alert title="Multiple attestations found" color="yellow" mt="xl">
+              <Text>
+                This phonenumber has been mapped to multiple addresses. The most
+                recent mapping is shown above.
+              </Text>
+              <Accordion defaultValue={null} w="100%">
+                <Accordion.Item value="View all attestations" w="100%">
+                  <Accordion.Control w="100%">
+                    View all attestations
+                  </Accordion.Control>
+                  <Accordion.Panel w="100%">
+                    <Table
+                      fontSize="xs"
+                      highlightOnHover
+                      withColumnBorders={false}
+                      w="100%"
+                      horizontalSpacing="xs"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Address</th>
+                          <th>Attestor</th>
+                          <th>Issued</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data.attestations.map((attestation, i) => (
+                          <tr key={`attestation-${i}`}>
+                            <td>{shortenAddress(attestation.address, 5, 2)}</td>
+                            <td>
+                              {shortenAddress(attestation.attestor, 5, 2)}
+                            </td>
+                            <td>
+                              {new Date(
+                                attestation.issuedOn * 1000
+                              ).toLocaleDateString()}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </Table>
+                  </Accordion.Panel>
+                </Accordion.Item>
+              </Accordion>
+            </Alert>
+          )}
         </Stack>
       )}
       {fetchDetails.isError ||

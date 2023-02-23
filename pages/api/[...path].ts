@@ -19,25 +19,42 @@ export const config = {
 // Quick and dirty way for us to hide API key on client
 async function serviceWrapper(req: NextRequest, res: NextResponse) {
   const path = req.url.split("/api/")[1].split("/");
-
+  console.log(path);
   try {
     const method = (req.method?.toLowerCase() ?? "get") as Method;
+    let body: any = null;
+    console.log(method);
+    if (method !== "get") {
+      body = JSON.stringify(await req.json());
+      console.log(body);
+    }
+    console.log({
+      method,
+      body: !body ? undefined : body,
+      headers: {
+        ["x-api-key"]: process.env.IDENTITY_API_KEY as string,
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+    });
     const response = await fetch(
       [ENDPOINT, ...path].map((s) => s.trim()).join("/"),
       {
-        ...req,
         method,
-        body: req.body ? JSON.stringify(req.body) : undefined,
+        body: !body ? undefined : body,
         headers: {
           ["x-api-key"]: process.env.IDENTITY_API_KEY as string,
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
         },
       }
     );
-
     const resp = await response.json();
 
-    if (response.status === 200) {
-      return NextResponse.json(resp);
+    if (response.status < 400) {
+      return NextResponse.json(resp, {
+        status: response.status,
+      });
     } else {
       return NextResponse.json(
         { message: resp.message, path },
@@ -47,6 +64,7 @@ async function serviceWrapper(req: NextRequest, res: NextResponse) {
       );
     }
   } catch (error) {
+    console.error(error);
     if (axios.isAxiosError(error)) {
       const jsonError = error.toJSON() as { status: number };
 
