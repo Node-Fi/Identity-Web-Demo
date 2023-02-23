@@ -15,7 +15,6 @@ const cookieOptions = {
 async function serviceWrapper(req: NextApiRequest, res: NextApiResponse) {
   const { path: _path, ...params } = req.query;
   const path = !_path ? [] : Array.isArray(_path) ? _path : [_path];
-
   try {
     const method = (req.method?.toLowerCase() ?? "get") as Method;
     const resp = await axios.request({
@@ -31,9 +30,10 @@ async function serviceWrapper(req: NextApiRequest, res: NextApiResponse) {
 
     res.send(resp?.data);
   } catch (error) {
-    console.error(error);
     if (axios.isAxiosError(error)) {
-      res.status(+(error.code ?? 500)).json({ message: error.message });
+      res
+        .status(+(error.status ?? error.toJSON().status ?? 500))
+        .json({ message: error.message, path });
     }
   }
 }
