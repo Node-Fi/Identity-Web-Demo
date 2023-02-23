@@ -13,6 +13,9 @@ import axios from "axios";
 import { useState } from "react";
 import { useAccount, useQuery } from "wagmi";
 import PhoneInput from "../PhoneNumberInput/PhoneNumberInput";
+import { StatRow } from "../StatRow/StatRow";
+import { shortenAddress } from "../../utils/shortenAddress";
+import { IconCalendar, IconKey, IconWallet } from "@tabler/icons-react";
 
 interface Attestation {
   address: string;
@@ -66,34 +69,23 @@ export const LookupNumberModal = () => {
       {fetchDetails.isSuccess && data && data.address && (
         <Stack>
           <Divider mt="xl" />
-
-          <Group w="100%">
-            <Text>Phonenumber</Text>
-            <Text>{phoneNumber}</Text>
-          </Group>
-
-          <Divider mt="xl" />
-
-          <Group w="100%">
-            <Text>Address</Text>
-            <Text>{data.address}</Text>
-          </Group>
-          <Divider />
-
-          <Group w="100%">
-            <Text>Attestor</Text>
-            <Text>{data.attestor}</Text>
-          </Group>
-          <Divider />
-
-          <Group w="100%">
-            <Text>Issued On</Text>
-            <Text>
-              {data.issuedOn
-                ? new Date(data.issuedOn * 1000).toLocaleDateString()
-                : "-"}
-            </Text>
-          </Group>
+          <StatRow
+            Icon={IconWallet}
+            name="Address"
+            value={shortenAddress(data.address)}
+          />
+          <Divider mt={0} />
+          <StatRow
+            Icon={IconKey}
+            name="Attestor"
+            value={shortenAddress(data.attestor)}
+          />
+          <Divider mt={0} />
+          <StatRow
+            Icon={IconCalendar}
+            name="Issued On"
+            value={new Date(data.issuedOn * 1000).toLocaleDateString()}
+          />
           <Button
             variant="gradient"
             mt="xl"
