@@ -170,7 +170,7 @@ export const PhoneNumberMappingBody = () => {
   );
 
   return (
-    <Container>
+    <Container w="100%" p={0}>
       <Stack mb="xl">
         <Progress value={progress} color={color} />
 
@@ -269,6 +269,7 @@ export const PhoneNumberMappingBody = () => {
             If you continue, you will overwrite your existing mapping.
           </Text>
           <Button
+            w="100%"
             onClick={async () => {
               init.reset();
               init.mutate({

@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 import axios from "axios";
 import { useState } from "react";
-import { useQuery } from "wagmi";
+import { useAccount, useQuery } from "wagmi";
 import PhoneInput from "../PhoneNumberInput/PhoneNumberInput";
 
 interface Attestation {
@@ -51,10 +51,13 @@ export const useQueryPhoneNumberMapping = (phoneNumber?: string) => {
 
 export const LookupNumberModal = () => {
   const [phoneNumber, setPhonenumber] = useState<string>();
+  const account = useAccount();
 
-  const { data, fetchDetails } = useQueryPhoneNumberMapping(phoneNumber);
+  const { data, fetchDetails } = useQueryPhoneNumberMapping(
+    phoneNumber?.trim()
+  );
   return (
-    <Container>
+    <Container w="100%" p={0}>
       <Text size="xl" mb="xl">
         Lookup Phonenumber
       </Text>
@@ -97,7 +100,9 @@ export const LookupNumberModal = () => {
             w="100%"
             onClick={() => alert("Coming soon!")}
           >
-            Send Tokens to This Address
+            {account.isConnected
+              ? "Send Tokens to This Address"
+              : "Connect Wallet to Send Tokens"}
           </Button>
         </Stack>
       )}
