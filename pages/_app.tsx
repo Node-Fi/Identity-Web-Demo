@@ -44,8 +44,6 @@ const { chains, provider, webSocketProvider } = configureChains(
   [celo, celoAlfajores, mainnet, polygon, optimism, arbitrum],
   [
     alchemyProvider({
-      // This is Alchemy's default API key.
-      // You can get your own at https://dashboard.alchemyapi.io
       apiKey: "_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
     }),
     publicProvider(),
@@ -64,12 +62,14 @@ const wagmiClient = createClient({
   webSocketProvider,
 });
 
-function MyApp({
+function App({
   Component,
   pageProps,
   colorScheme: _colorScheme,
 }: AppProps & { colorScheme: ColorScheme }) {
-  const [colorScheme, setColorScheme] = useState<ColorScheme>(_colorScheme);
+  const [colorScheme, setColorScheme] = useState<ColorScheme>(
+    _colorScheme ?? "dark"
+  );
 
   const toggleColorScheme = (value?: ColorScheme) => {
     const nextColorScheme =
@@ -117,46 +117,7 @@ function MyApp({
             <RainbowKitProvider chains={chains}>
               <ModalsProvider>
                 <AppShell
-                  header={
-                    <Header />
-                    // <Header height={60} withBorder={false} p="md">
-                    //   <Container
-                    //     size="md"
-                    //     style={{
-                    //       display: "flex",
-                    //       alignItems: "center",
-                    //       alignContent: "center",
-                    //       height: "100%",
-                    //       justifyContent: "space-between",
-                    //     }}
-                    //   >
-                    //     <Image
-                    //       style={{
-                    //         width: 200,
-                    //         display: "flex",
-                    //         alignItems: "center",
-                    //       }}
-                    //       src={
-                    //         colorScheme === "dark"
-                    //           ? "/images/profile/node-finance-nobg.png"
-                    //           : "/images/node_logo_dark.png"
-                    //       }
-                    //       alt="Node Finance"
-                    //     />
-                    //     <Group align="center" spacing={20}>
-                    //       <MediaQuery
-                    //         smallerThan="sm"
-                    //         styles={{ display: "none" }}
-                    //       >
-                    //         <div>
-                    //           <ConnectButton />
-                    //         </div>
-                    //       </MediaQuery>
-                    //       <ColorSchemeToggle />
-                    //     </Group>
-                    //   </Container>
-                    // </Header>
-                  }
+                  header={<Header />}
                   footer={
                     <MediaQuery largerThan="sm" styles={{ display: "none" }}>
                       <Footer height={80} withBorder>
@@ -195,4 +156,4 @@ export const getInitialProps = async (appContext: AppContext) => {
   };
 };
 
-export default MyApp;
+export default App;
