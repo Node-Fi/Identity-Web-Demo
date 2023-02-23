@@ -20,7 +20,7 @@ async function serviceWrapper(req: NextApiRequest, res: NextApiResponse) {
     const method = (req.method?.toLowerCase() ?? "get") as Method;
     const resp = await axios.request({
       ...req,
-      url: [ENDPOINT, ...path].join("/"),
+      url: [ENDPOINT, ...path].map((s) => s.trim()).join("/"),
       method,
       params,
       data: req.body,
