@@ -31,8 +31,9 @@ async function serviceWrapper(req: NextApiRequest, res: NextApiResponse) {
     res.send(resp?.data);
   } catch (error) {
     if (axios.isAxiosError(error)) {
+      const jsonError = error.toJSON() as { status: number };
       res
-        .status(+(error.status ?? error.toJSON().status ?? 500))
+        .status(+(error.status ?? jsonError.status ?? 500))
         .json({ message: error.message, path });
     }
   }
