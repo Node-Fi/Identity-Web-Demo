@@ -280,7 +280,6 @@ export function Header() {
 
           <Group className={classes.hiddenMobile}>
             <ConnectButton />
-            <ColorSchemeToggle />
           </Group>
 
           <Burger
@@ -350,7 +349,6 @@ export function Header() {
             my="sm"
             color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
           />
-          <ColorSchemeSelectorSwitch />
         </ScrollArea>
       </Drawer>
     </>

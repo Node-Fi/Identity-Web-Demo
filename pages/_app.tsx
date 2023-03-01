@@ -4,6 +4,7 @@ import type { AppContext, AppProps } from "next/app";
 import {
   ConnectButton,
   RainbowKitProvider,
+  darkTheme,
   getDefaultWallets,
 } from "@rainbow-me/rainbowkit";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
@@ -39,6 +40,7 @@ import { getCookie, setCookie } from "cookies-next";
 import { ColorSchemeToggle } from "../components/ColorSchemeToggle/CollorSchemeToggle";
 import { HorizontalSection } from "@mantine/core/lib/AppShell/HorizontalSection/HorizontalSection";
 import { Header } from "../components/Header/Header";
+import { PrivacyButton } from "../components/PrivacyButton/PrivacyButton";
 
 const { chains, provider, webSocketProvider } = configureChains(
   [celo, celoAlfajores, mainnet, polygon, optimism, arbitrum],
@@ -114,7 +116,7 @@ function App({
           }}
         >
           <WagmiConfig client={wagmiClient}>
-            <RainbowKitProvider chains={chains}>
+            <RainbowKitProvider chains={chains} coolMode theme={darkTheme()}>
               <ModalsProvider>
                 <AppShell
                   header={<Header />}
@@ -132,6 +134,7 @@ function App({
                           }}
                         >
                           <ConnectButton />
+                          <PrivacyButton />
                         </Container>
                       </Footer>
                     </MediaQuery>

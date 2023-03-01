@@ -4,8 +4,11 @@ import { Divider, Group, Input, TextInput } from "@mantine/core";
 import SelectCountry, { FlagInfo } from "./SelectCountry";
 import { useStyles } from "./styles";
 
-const isPhoneNumber = (str: string): boolean =>
-  /^(\+\d{1,2})?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test(str);
+// Should check that 1) all characters are numbers, 2) the number is at least {len} digits long
+const isPhoneNumber = (str: string, len = 10): boolean => {
+  const strippedNumber = str.replace(/\D/g, "");
+  return strippedNumber.length >= len;
+};
 
 const PhoneInput = ({
   onValidPhonenumber,
@@ -23,7 +26,7 @@ const PhoneInput = ({
 
   const onCountrySelect = useCallback(
     (country: FlagInfo) => {
-      if (phoneNumber && isPhoneNumber(phoneNumber)) {
+      if (phoneNumber && isPhoneNumber(phoneNumber, country.num_digits)) {
         const strippedNumber = phoneNumber.replace(/\D/g, "");
         onValidPhonenumber(`${country.dial_code}${strippedNumber}`);
       }
@@ -57,7 +60,9 @@ const PhoneInput = ({
       <TextInput
         value={phoneNumber}
         onChange={onPhoneNumberChange}
-        placeholder="000 000 0000"
+        placeholder={
+          country.num_digits ? "0".repeat(country.num_digits) : "000 000 0000"
+        }
         variant="unstyled"
         size="lg"
         w="60%"
