@@ -7,8 +7,16 @@ export function LookupNumberButton() {
 
   return (
     <>
-      <Button variant="gradient" onClick={() => setOpenModal(true)}>
-        Lookup Number
+      <Button
+        variant="filled"
+        color="dark"
+        bg="#1c1b29"
+        onClick={() => setOpenModal(true)}
+        p="md"
+        radius="md"
+        h="3.5rem"
+      >
+        Lookup a Number
       </Button>
       <Modal
         opened={modalOpened}
