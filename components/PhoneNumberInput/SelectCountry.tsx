@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 import {
   Button,
+  Container,
   Divider,
   Drawer,
   Group,
@@ -170,19 +171,26 @@ export default function SelectCountry({
         )}
       </Button>
       <BottomSheetMock opened={opened} onClose={() => setOpened(false)}>
-        <TextInput
-          onChange={(e) => setFiler(e.currentTarget.value)}
-          placeholder="🔎 Search..."
-          w={"90%"}
-          ml="auto"
-          mr="auto"
-          mt="lg"
-          mb="md"
-        />
+        <Container pl="sm" pr="sm">
+          <TextInput
+            onChange={(e) => setFiler(e.currentTarget.value)}
+            placeholder="🔎 Search..."
+            w={"100%"}
+            ml="auto"
+            mr="auto"
+            mt="lg"
+            mb="md"
+          />
+        </Container>
         <Divider mb="sm" />
 
-        <ScrollArea h="50vh">
-          <Stack w="90vw">
+        <ScrollArea h="60vh" w="100%">
+          <Stack
+            w="60vw"
+            style={{
+              overflowX: "hidden",
+            }}
+          >
             {flags.map((c) => (
               <Button
                 key={c.name}
@@ -190,6 +198,7 @@ export default function SelectCountry({
                   onSelect?.(c);
                   setOpened(false);
                 }}
+                w="90%"
                 variant="subtle"
                 style={{
                   display: "flex",
