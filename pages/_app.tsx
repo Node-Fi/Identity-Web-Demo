@@ -114,6 +114,8 @@ function App({
           withNormalizeCSS
           theme={{
             colorScheme,
+
+            // Extremely hacky way of handling colors, but for this small of a project it's fine
             colors: {
               dark: [
                 ...DEFAULT_THEME.colors.dark.slice(0, 7),
