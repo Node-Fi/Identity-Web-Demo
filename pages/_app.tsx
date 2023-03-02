@@ -119,6 +119,17 @@ function App({
                 ...DEFAULT_THEME.colors.dark.slice(0, 7),
                 "#1E1E1E",
                 ...DEFAULT_THEME.colors.dark.slice(8, 10),
+              ] as [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
               ],
               _bg: ["#1E1E1E"],
               _blue: ["#1859FF"],
