@@ -1,9 +1,9 @@
 import { useCallback, useState } from "react";
-import { Button, Modal, Stack, Text } from "@mantine/core";
+import { Button, Modal, Stack, Text, useMantineTheme } from "@mantine/core";
 export function PrivacyButton() {
   const [isOpen, setIsOpen] = useState(false);
   const toggleModal = useCallback(() => setIsOpen((_isOpen) => !_isOpen), []);
-
+  const theme = useMantineTheme();
   return (
     <>
       <Modal title="On Privacy" onClose={toggleModal} opened={isOpen} centered>
@@ -52,7 +52,13 @@ export function PrivacyButton() {
           </Stack>
         </Stack>
       </Modal>
-      <Button onClick={toggleModal} variant="subtle">
+      <Button
+        onClick={toggleModal}
+        variant="subtle"
+        style={{
+          color: theme.colors._blue[0],
+        }}
+      >
         Privacy
       </Button>
     </>

@@ -25,6 +25,7 @@ import {
   ColorScheme,
   ColorSchemeProvider,
   Container,
+  DEFAULT_THEME,
   Footer,
   Group,
   Image,
@@ -113,10 +114,30 @@ function App({
           withNormalizeCSS
           theme={{
             colorScheme,
+            colors: {
+              dark: [
+                ...DEFAULT_THEME.colors.dark.slice(0, 7),
+                "#1E1E1E",
+                ...DEFAULT_THEME.colors.dark.slice(8, 10),
+              ],
+              _bg: ["#1E1E1E"],
+              _blue: ["#1859FF"],
+              _grey: ["#7C7C7C"],
+              _d_blue: ["#122B51"],
+              _off_black: ["#1C1B29"],
+              _red: ["#FF4343"],
+              _d_red: ["#320000"],
+              _green: ["#00E8A5"],
+              _d_green: ["#002218"],
+            },
           }}
         >
           <WagmiConfig client={wagmiClient}>
-            <RainbowKitProvider chains={chains} coolMode theme={darkTheme()}>
+            <RainbowKitProvider
+              chains={chains}
+              coolMode
+              theme={darkTheme({ accentColor: "#122B51" })}
+            >
               <ModalsProvider>
                 <AppShell
                   header={<Header />}

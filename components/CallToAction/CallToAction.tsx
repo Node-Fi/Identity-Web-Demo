@@ -4,8 +4,8 @@ import { LookupNumberButton } from "../../content/LookupNumberButton";
 
 export function CallToAction() {
   return (
-    <Stack>
-      <Text mt="xl" color="dimmed">
+    <Stack mt="xl">
+      <Text mt="xl" color="#7C7C7C">
         Try it yourself:
       </Text>
       <MapPhoneNumberButton />
