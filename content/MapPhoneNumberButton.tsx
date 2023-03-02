@@ -30,17 +30,12 @@ export function MapPhoneNumberButton() {
     </>
   ) : (
     <Button
-      variant="outline"
+      variant="filled"
       onClick={connection.openConnectModal}
       p="md"
       radius="md"
       h="3.5rem"
-      styles={{
-        root: {
-          borderColor: theme.colors._blue[0],
-          color: theme.colors._blue[0],
-        },
-      }}
+      bg={theme.colors._blue[0]}
     >
       Connect Wallet to Map Phone Number
     </Button>

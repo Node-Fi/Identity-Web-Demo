@@ -85,7 +85,12 @@ function App({
   return (
     <>
       <Head>
-        <title>Node Finance Identity</title>
+        <title>Social Connect</title>
+        <meta
+          name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
+        />
+
         <meta
           property="og:image"
           content="https://lh3.googleusercontent.com/gJtGvddxJN04PFRQO5X3ZwL3Pt9kg0gOBkHsVDhabyOOAFIIxQ_aSuX28rhPyC9P9XFcDE4fMHvmh8obyDnBzo8D4w3fki8=s1200"
@@ -104,6 +109,7 @@ function App({
           content="Interact with the Node Finance Identity service"
         />
         <link rel="icon" href="/node-logo.png" />
+        <link rel="apple-touch-icon" href="/node-logo.png"></link>
       </Head>
       <ColorSchemeProvider
         colorScheme={colorScheme}
@@ -119,7 +125,7 @@ function App({
             colors: {
               dark: [
                 ...DEFAULT_THEME.colors.dark.slice(0, 7),
-                "#1E1E1E",
+                "#0B0D13",
                 ...DEFAULT_THEME.colors.dark.slice(8, 10),
               ] as [
                 string,
@@ -133,7 +139,7 @@ function App({
                 string,
                 string
               ],
-              _bg: ["#1E1E1E"],
+              _bg: ["#0B0D13"],
               _blue: ["#1859FF"],
               _grey: ["#7C7C7C"],
               _d_blue: ["#122B51"],
