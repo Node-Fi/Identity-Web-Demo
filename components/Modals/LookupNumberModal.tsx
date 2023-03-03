@@ -18,6 +18,7 @@ import PhoneInput from "../PhoneNumberInput/PhoneNumberInput";
 import { StatRow } from "../StatRow/StatRow";
 import { shortenAddress } from "../../utils/shortenAddress";
 import { IconCalendar, IconKey, IconWallet } from "@tabler/icons-react";
+import { SendTokensButton } from "../../content/SendTokensButton";
 
 interface Attestation {
   address: string;
@@ -88,16 +89,7 @@ export const LookupNumberModal = () => {
             name="Issued On"
             value={new Date(data.issuedOn * 1000).toLocaleDateString()}
           />
-          <Button
-            variant="gradient"
-            mt="xl"
-            w="100%"
-            onClick={() => alert("Coming soon!")}
-          >
-            {account.isConnected
-              ? "Send Tokens to This Address"
-              : "Connect Wallet to Send Tokens"}
-          </Button>
+          <SendTokensButton recipient={data.address} />
           {data && data.attestations.length > 1 && (
             <Alert title="Multiple attestations found" color="yellow" mt="xl">
               <Text>
