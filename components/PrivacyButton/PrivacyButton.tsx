@@ -38,7 +38,7 @@ export function PrivacyButton() {
           <Stack spacing={0}>
             <Text color="green">Optional discoverability (coming soon)</Text>
             <Text>
-              Node Finance is building a layer ontop of Node Finance to allow
+              Node Finance is building a layer on top of SocialConnect to allow
               only certain contacts to be able to find them.{" "}
               <Text
                 span
